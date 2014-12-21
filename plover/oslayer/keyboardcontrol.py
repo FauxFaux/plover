@@ -22,7 +22,10 @@ KEYBOARDCONTROL_NOT_FOUND_FOR_OS = \
         "No keyboard control module was found for os %s" % sys.platform
 
 if sys.platform.startswith('linux'):
-    import xkeyboardcontrol as keyboardcontrol
+    if sys.stdin.closed or sys.stdin.isatty():
+        import xkeyboardcontrol as keyboardcontrol
+    else:
+        import evkeyboardcontrol as keyboardcontrol
 elif sys.platform.startswith('win32'):
     import winkeyboardcontrol as keyboardcontrol
 elif sys.platform.startswith('darwin'):
